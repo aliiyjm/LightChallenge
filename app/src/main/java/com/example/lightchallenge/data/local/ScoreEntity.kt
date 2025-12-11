@@ -10,5 +10,5 @@ data class ScoreEntity(
     val playerName: String,
     val score: Int,
     val date: String,
-    val username: String // Campo obligatorio ahora
+    val username: String
 )
