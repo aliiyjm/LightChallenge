@@ -33,6 +33,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+
 @Composable
 fun AuthNavigator(viewModel: GameViewModel) {
     var showLogin by remember { mutableStateOf(true) }
