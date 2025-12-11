@@ -15,6 +15,7 @@ interface ScoreDao {
     suspend fun delete(score: ScoreEntity)
 
     @Query("SELECT * FROM scores ORDER BY score DESC")
+
     suspend fun getAllScores(): List<ScoreEntity>
 
 
