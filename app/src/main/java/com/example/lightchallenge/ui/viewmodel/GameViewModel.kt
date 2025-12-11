@@ -36,7 +36,7 @@ class GameViewModel(application: Application) :
     private val lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT)
 
     private var currentScore = 0
-    private val threshold = 300f
+    private val threshold = 15f
 
     private val _lux = MutableStateFlow(0f)
     val lux: StateFlow<Float> = _lux
