@@ -14,7 +14,7 @@ import com.example.lightchallenge.ui.viewmodel.GameViewModel
 fun GameScreen(viewModel: GameViewModel) {
     val lux by viewModel.lux.collectAsState()
     val score by viewModel.score.collectAsState()
-    val currentUser by viewModel.currentUser.collectAsState()currentUser.username),
+    val currentUser by viewModel.currentUser.collectAsState()
     Column(
         modifier = Modifier
             .fillMaxSize()
