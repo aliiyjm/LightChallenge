@@ -1,5 +1,7 @@
 package com.example.lightchallenge.data.remote
 
+import androidx.tracing.perfetto.handshake.protocol.Response
+
 
 // --- Modelos usados en las peticiones y respuestas ---
 data class UserDto(
