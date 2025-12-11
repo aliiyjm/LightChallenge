@@ -16,4 +16,6 @@ interface ScoreDao {
 
     @Query
     suspend fun getAllScores(): List<ScoreEntity>
+
+
 }
