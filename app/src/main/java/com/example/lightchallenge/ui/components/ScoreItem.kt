@@ -25,15 +25,11 @@ fun ScoreItem(
             .padding(12.dp)
     ) {
         Column(modifier = Modifier.align(Alignment.CenterStart)) {
-            Text("
-                👤
-            ${score.playerName}", style =
+            Text("👤${score.playerName}", style =
             MaterialTheme.typography.titleMedium)
             Text("Puntuación: ${score.score}", style =
                 MaterialTheme.typography.bodyMedium)
-            Text("
-                📅
-            ${score.date}", style =
+            Text("${score.date}", style =
             MaterialTheme.typography.bodySmall)
         }
 
@@ -55,10 +51,7 @@ fun ScoreItem(
         }
     }
 
-    //
-    �
-    �
-    Diálogo de edición (solo nombre)
+    // Diálogo de edición (solo nombre)
     if (showEditDialog) {
         EditNameDialog(
             score = score,
