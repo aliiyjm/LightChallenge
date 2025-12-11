@@ -1,6 +1,10 @@
 package com.example.lightchallenge.data.remote
 
-import androidx.tracing.perfetto.handshake.protocol.Response
+import retrofit2.Response
+import retrofit2.http.Body
+import retrofit2.http.GET
+import retrofit2.http.POST
+import retrofit2.http.Path
 
 data class ScoreDto(
     val playerName: String,
