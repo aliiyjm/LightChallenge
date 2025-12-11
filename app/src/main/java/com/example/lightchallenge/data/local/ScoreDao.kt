@@ -18,5 +18,4 @@ interface ScoreDao {
 
     suspend fun getAllScores(): List<ScoreEntity>
 
-
 }

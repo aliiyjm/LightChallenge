@@ -1,7 +1,7 @@
 package com.example.lightchallenge.ui.viewmodel
 
-
 import android.app.Application
+import android.content.Context
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
@@ -23,6 +23,13 @@ import java.util.*
 
 class GameViewModel(application: Application) :
     AndroidViewModel(application), SensorEventListener {
+
+    // SharedPreferences para controlar el "permiso" de primer uso
+    private val prefs = application.getSharedPreferences("light_challenge_prefs", Context.MODE_PRIVATE)
+    
+    // Estado del permiso
+    private val _isSensorPermissionGranted = MutableStateFlow(prefs.getBoolean("sensor_permission_granted", false))
+    val isSensorPermissionGranted: StateFlow<Boolean> = _isSensorPermissionGranted
 
     // Sensor de luz
     private val sensorManager = application.getSystemService(SensorManager::class.java)
@@ -66,13 +73,26 @@ class GameViewModel(application: Application) :
             _currentUser.value = userRepository.getCurrentUser()
         }
 
-        registerSensor()
+        // Si ya se concedió el permiso anteriormente, iniciamos el sensor
+        if (_isSensorPermissionGranted.value) {
+            startSensor()
+        }
+        
         loadScores()
     }
 
+    // ---------------- PERMISO SIMULADO ----------------
+    fun grantSensorPermission() {
+        prefs.edit().putBoolean("sensor_permission_granted", true).apply()
+        _isSensorPermissionGranted.value = true
+        startSensor()
+    }
+
     // ---------------- SENSOR ----------------
-    private fun registerSensor() {
-        sensorManager.registerListener(this, lightSensor, SensorManager.SENSOR_DELAY_NORMAL)
+    fun startSensor() {
+        if (lightSensor != null) {
+            sensorManager.registerListener(this, lightSensor, SensorManager.SENSOR_DELAY_NORMAL)
+        }
     }
 
     override fun onSensorChanged(event: SensorEvent?) {
@@ -131,7 +151,6 @@ class GameViewModel(application: Application) :
             try {
                 userRepository.registerUserLocal(user)
                 userRepository.registerRemote(user)
-                // _currentUser.value = user // Eliminado para no iniciar sesión automáticamente
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -145,7 +164,6 @@ class GameViewModel(application: Application) :
                 _currentUser.value = user
                 onResult(true)
             } else {
-                // Intento de login remoto (si se desea)
                 try {
                     val response = userRepository.loginRemote(UserEntity(username = username, password = password))
                     if (response) {
